@@ -23,31 +23,100 @@ class WorldBankAPI:
     
     # Popular countries for quick selection
     POPULAR_COUNTRIES = {
+        # G7 Countries
         "USA": "United States",
-        "CHN": "China",
         "JPN": "Japan",
         "DEU": "Germany",
         "GBR": "United Kingdom",
-        "IND": "India",
         "FRA": "France",
-        "BRA": "Brazil",
         "ITA": "Italy",
         "CAN": "Canada",
-        "KOR": "Korea, Rep.",
+        
+        # BRICS Nations
+        "BRA": "Brazil",
         "RUS": "Russian Federation",
-        "AUS": "Australia",
-        "MEX": "Mexico",
-        "IDN": "Indonesia",
+        "IND": "India",
+        "CHN": "China",
+        "ZAF": "South Africa",
+        
+        # Major European Economies
+        "ESP": "Spain",
         "NLD": "Netherlands",
-        "SAU": "Saudi Arabia",
-        "TUR": "Turkey",
         "CHE": "Switzerland",
         "POL": "Poland",
-        "ESP": "Spain",
-        "ZAF": "South Africa",
+        "SWE": "Sweden",
+        "BEL": "Belgium",
+        "AUT": "Austria",
+        "NOR": "Norway",
+        "DNK": "Denmark",
+        "IRL": "Ireland",
+        "FIN": "Finland",
+        "PRT": "Portugal",
+        "GRC": "Greece",
+        "CZE": "Czech Republic",
+        "ROU": "Romania",
+        "HUN": "Hungary",
+        
+        # Asia-Pacific
+        "KOR": "Korea, Rep.",
+        "AUS": "Australia",
+        "IDN": "Indonesia",
+        "THA": "Thailand",
+        "SGP": "Singapore",
+        "MYS": "Malaysia",
+        "PHL": "Philippines",
+        "VNM": "Vietnam",
+        "PAK": "Pakistan",
+        "BGD": "Bangladesh",
+        "NZL": "New Zealand",
+        "HKG": "Hong Kong SAR, China",
+        "TWN": "Taiwan, China",
+        
+        # Middle East & North Africa
+        "SAU": "Saudi Arabia",
+        "TUR": "Turkey",
+        "EGY": "Egypt, Arab Rep.",
+        "IRN": "Iran, Islamic Rep.",
+        "IRQ": "Iraq",
+        "ARE": "United Arab Emirates",
+        "ISR": "Israel",
+        "QAT": "Qatar",
+        "KWT": "Kuwait",
+        "DZA": "Algeria",
+        "MAR": "Morocco",
+        "JOR": "Jordan",
+        "LBN": "Lebanon",
+        
+        # Latin America
+        "MEX": "Mexico",
         "ARG": "Argentina",
+        "COL": "Colombia",
+        "CHL": "Chile",
+        "PER": "Peru",
+        "VEN": "Venezuela, RB",
+        "ECU": "Ecuador",
+        "URY": "Uruguay",
+        "CRI": "Costa Rica",
+        "PAN": "Panama",
+        
+        # Africa
         "NGA": "Nigeria",
-        "EGY": "Egypt, Arab Rep."
+        "KEN": "Kenya",
+        "ETH": "Ethiopia",
+        "GHA": "Ghana",
+        "TZA": "Tanzania",
+        "UGA": "Uganda",
+        "CIV": "Cote d'Ivoire",
+        "SEN": "Senegal",
+        "CMR": "Cameroon",
+        "AGO": "Angola",
+        
+        # Other Major Economies
+        "UKR": "Ukraine",
+        "KAZ": "Kazakhstan",
+        "LKA": "Sri Lanka",
+        "MNG": "Mongolia",
+        "ISL": "Iceland"
     }
     
     def __init__(self):
