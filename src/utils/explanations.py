@@ -42,7 +42,12 @@ def _percent_changes(df: pd.DataFrame) -> pd.DataFrame:
 def _is_percentage_indicator(indicator_key: str) -> bool:
     return any(x in indicator_key for x in ["pct", "rate", "growth"])
 
-def detect_extremes(df: pd.DataFrame, indicator_key: str, top_n: int = 3) -> Dict[str, Dict[str, List[Dict]]]:
+def detect_extremes(
+    df: pd.DataFrame,
+    indicator_key: str,
+    top_n: int = 3,
+    min_abs_change_pct: float = 5.0,
+) -> Dict[str, Dict[str, List[Dict]]]:
     """Detect top rises and dips per country.
 
     Returns structure: {country: {"rises": [...], "dips": [...]}}
@@ -54,6 +59,8 @@ def detect_extremes(df: pd.DataFrame, indicator_key: str, top_n: int = 3) -> Dic
         cdata = pc_df[pc_df['country'] == country]
         # Exclude first NaN change
         cvalid = cdata.dropna(subset=['pct_change'])
+        # Apply significance threshold
+        cvalid = cvalid[ cvalid['pct_change'].abs() >= float(min_abs_change_pct) ]
         if cvalid.empty:
             continue
         rises = cvalid.nlargest(top_n, 'pct_change')
@@ -85,14 +92,19 @@ def _augment_reason(indicator_key: str, year: int) -> List[str]:
             reasons.append(mapping[year])
     return reasons
 
-def generate_explanations(df: pd.DataFrame, indicator_key: str, top_n: int = 3) -> List[str]:
+def generate_explanations(
+    df: pd.DataFrame,
+    indicator_key: str,
+    top_n: int = 3,
+    min_abs_change_pct: float = 5.0,
+) -> List[str]:
     """Generate formatted explanation strings for dips and rises.
 
     Output: list of markdown bullet strings.
     """
     if df.empty:
         return ["No data available to analyze dips/rises."]
-    extremes = detect_extremes(df, indicator_key, top_n=top_n)
+    extremes = detect_extremes(df, indicator_key, top_n=top_n, min_abs_change_pct=min_abs_change_pct)
     lines: List[str] = []
     for country, vals in extremes.items():
         # Dips
@@ -110,7 +122,7 @@ def generate_explanations(df: pd.DataFrame, indicator_key: str, top_n: int = 3) 
                 f"🔺 {country} {rise['year']}: {rise['change_pct']:.2f}% rise (value {rise['value']:.2f}) — {reason_str}"
             )
     if not lines:
-        return ["No significant year-over-year movements detected."]
+        return []
     # Deduplicate identical lines (possible if small dataset)
     seen = set()
     deduped = []

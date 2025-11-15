@@ -2,7 +2,6 @@
 Global Economic Trends Dashboard
 Interactive Streamlit application for visualizing macroeconomic indicators
 """
-
 import streamlit as st
 import sys
 from datetime import datetime
@@ -214,7 +213,7 @@ def main():
         st.stop()
     
     # Display metrics
-    st.header(f"📊 {indicator_name}")
+    st.header(f" {indicator_name}")
     st.markdown(f"**Category:** {category}")
     st.markdown("---")
     
@@ -255,12 +254,15 @@ def main():
         )
         st.plotly_chart(fig_line, use_container_width=True)
 
-        # Generate dip/rise explanations
-        st.markdown("### 📉📈 Dips & Rises: Contextual Explanations")
+        # Generate dip/rise explanations (only render if significant moves found)
         with st.spinner("Analyzing movements..."):
-            explanations = generate_explanations(df, indicator_key, top_n=2)
-        for exp in explanations:
-            st.markdown(f"- {exp}")
+            explanations = generate_explanations(
+                df, indicator_key, top_n=2, min_abs_change_pct=5.0
+            )
+        if explanations:
+            st.markdown("### 📉📈 Dips & Rises: Contextual Explanations")
+            for exp in explanations:
+                st.markdown(f"- {exp}")
         
         # Growth rates
         if show_growth:
